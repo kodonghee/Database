@@ -122,12 +122,25 @@
 ##### hr 8개 테이블 조회 실습
 
 * conn hr/hr;
+
 * select * from tab; --> 테이블 목록 조회
+
 * 문법
-  * select 조회 column from 테이블 이름
+
+  * select 조회 column from 테이블 이름;
+    * column명 = *  --> 모든 column 조회
     * select
     * from
     * where
     * group by
     * having
     * order by
+
+  * desc 테이블 이름;
+    * 테이블 column명 타입 갯수
+
+```sql
+SELECT first_name FROM Employees
+SELECT * FROM Employees
+```
+
