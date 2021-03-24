@@ -92,7 +92,7 @@
   * set pagesize 100; -> table 크기 설정
   * set linesize 150; -> table 크기 설정
 * SQL> disconnect
-* 4글자 축약 가능 (conn, disconn) / 대소문자 구분 x (단, 암호는 대소문자 구분)
+* 4글자 축약 가능 (conn, disconn) / 대소문자 구분 x (단, 암호나 ''문자 데이터는 대소문자 구분)
 
 ###### SQL 종류
 
@@ -140,7 +140,65 @@
     * 테이블 column명 타입 갯수
 
 ```sql
-SELECT first_name FROM Employees
-SELECT * FROM Employees
+SELECT first_name FROM Employees;
+SELECT * FROM Employees;
 ```
+
+* 사칙 연산 가능
+
+```sql
+SELECT first_name, salary, salary * 12 FROM Employees;
+```
+
+* 실제 column명을 조회 임시 변경 - alias 
+
+```sql
+SELECT first_name as 이름, salary as 월급, salary * 12 as 연봉 FROM Employees;
+```
+
+* 종류별로 1개만 조회
+
+```sql
+SELECT distinct job_id from Employees; 
+```
+
+* upper()
+  * 소문자를 대문자로 변경
+
+```sql
+SELECT first_name, upper(first_name) FROM Employees;
+```
+
+* where 절
+  * 특정 조건에 해당하는 데이터만 조회
+
+```sql
+SELECT first_name, salary FROM Employees WHERE salary >= 10000;
+```
+
+* in ()
+
+```sql
+SELECT employee_id, first_name FROM Employees 
+WHERE employee_id in (50, 100, 150, 200, 250, 300);
+```
+
+* like '%'
+  * 유사한 패턴을 찾을 때
+
+```sql
+SELECT employee_id, first_name FROM employees 
+WHERE first_name like 'J%'; # J로 시작하는 이름을 가진 직원 조회
+```
+
+
+
+##### 연산자
+
+| 산술 연산자 | + - * /             |
+| ----------- | ------------------- |
+| 비교 연산자 | > >= < <= != (<>) = |
+| 논리 연산자 | not and or          |
+| 목록 연산자 | in (...)            |
+| 유사 연산자 | `LIKE` 'J%'         |
 
