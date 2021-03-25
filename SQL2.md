@@ -121,7 +121,7 @@ FROM DUAL;
 ------------------------------------------------------------------------
 2021년도03월25일 13시51분51초
 
-#fm: 의미 없는 포맷은 버림
+#fm: 의미 없는 포맷은 버림 
 SELECT TO_CHAR(SYSDATE, 'fmYYYY"년도"MM"월"DD"일" HH24"시"MI"분"SS"초"') 
 FROM DUAL;
 ------------------------------------------------------------------------
@@ -134,15 +134,15 @@ FROM DUAL;
 
 #### 함수 정리
 
-| 타입 변환 함수   |         |
-| ---------------- | ------- |
-| 그룹 합수        |         |
-| 문자 데이터 함수 | UPPER   |
-| 숫자 데이터 함수 |         |
-| 날짜 데이터 함수 | SYSDATE |
-|                  |         |
-|                  |         |
-|                  |         |
+| 타입 변환 함수   | CAST<br />TO_DATE, TO_CHAR, TO_NUMBER                        |
+| ---------------- | ------------------------------------------------------------ |
+| 그룹 합수        | SUM, AVG, MIN, MAX, COUNT, STDEV, VARIANCE                   |
+| 문자 데이터 함수 | UPPER, LOWER, INITCAP<br />CONCAT, LENGTH, LENGTHB, INSTR, SUBSTR<br />REPLACE, TRANSLATE<br />LTRIM, RTRIM |
+| 숫자 데이터 함수 | MOD - 나머지 구하는 함수<br />MOD(10, 3) = 1<br />ROUND - 반올림 해주는 함수<br />ROUND(10 / 3, 0); <br />(index: 백의 자리(-2) - 십의 자리(-1) - 일의 자리(0) <br />- 소수 첫째 자리(1) - 소수 둘째 자리(2) 형태)<br /> ex) ROUND(363.6789, -2) = 400<br />TRUNC - 버림 해주는 함수<br />TRUNC(3.953, 0) = 3; |
+| 날짜 데이터 함수 | SYSDATE<br />SYSTIMESTAMP - 1/1000초<br />ADD_MONTHS()<br />MONTHS_BETWEEN() |
+| 순위 함수        | ROWNUM<br />ROW_NUMBER()<br />RANK()<br />DENSE_RANK()<br /><br />ROW_NUMBER()<br />RANK()<br />DENSE_RANK()<br />순위함수 ()<br />OVER (PARTITION BY 소그룹 COLUMN<br />ORDER BY COLUMN ACS/DESC) |
+| NULL 처리함수    | NVL(salary, 0)                                               |
+|                  |                                                              |
 
 
 
@@ -250,5 +250,149 @@ SUBSTR('이것
 이것
 ```
 
+```sql
+SELECT hire_date FROM employees
+WHERE SUBSTR(hire_date, 4, 2) = '03';
+```
 
 
+
+
+
+#### LTRIM () / RTRIM ()
+
+```sql
+# 왼쪽 공백 제거
+SELECT LTRIM('     aaa     ') FROM DUAL;
+
+# 오른쪽 공백 제거
+SELECT RTRIM('     aaa     ') FROM DUAL;
+
+# 왼쪽 특정 문자 제거
+SELECT LTRIM('##aaa##','#') FROM DUAL;
+
+# 오른쪽 특정 문자 제거
+SELECT RTRIM('##aaa###', '#') FROM DUAL;
+```
+
+
+
+
+
+#### MOD, ROUND, TRUNC
+
+* employees table에서 홀수 사번 조회
+
+```sql
+SELECT employee_id FROM employees WHERE MOD(employee_id, 2) = 1;
+```
+
+* employees table에서 입사년도별 급여 평균 조회하되 평균은 정수로 출력 (소수점 이하 버림)
+
+```sql
+SELECT TO_CHAR(hire_date, 'yyyy') as hire_year, TRUNC(avg(salary), 0) 
+FROM employees group by TO_CHAR(hire_date, 'yyyy');
+```
+
+```sql
+SELECT SUBSTR(hire_date, 1, 2) as hire_year, TRUNC(avg(salary), 0) 
+FROM employees group by SUBSTR(hire_date, 1, 2);
+```
+
+
+
+
+
+#### ADD_MONTHS
+
+* 날짜를 기준으로 개월을 더한다.
+
+```sql
+SELECT ADD_MONTHS(SYSDATE, 1) FROM DUAL;
+```
+
+
+
+
+
+#### MONTHS_BETWEEN
+
+* 두 날짜 사이에 몇 개월이 지났는지 출력
+
+  * 몇 년이 지났는지, 몇 주가 지났는지는 나누기 연산으로 구하기 쉽지만 경과 개월 수는 구하기 어렵다. (매월 포함되는 일 수가 달라지기 때문) --> MONTHS_BETWEEN 사용
+  * 입사한지 경과 개월 수 조회
+
+  ```sql
+  SELECT MONTHS_BETWEEN(sysdate, hire_date) FROM employees;
+  ```
+
+
+
+
+
+#### ROW_NUMBER () / RANK () / DENSE_RANK ()
+
+* ROW_NUMBER ()
+
+  * 같은 값을 가지는 항목의 순위도 다 다르게 매겨짐
+
+  ```sql
+  SELECT first_name as 이름, salary as 급여, 
+  ROW_NUMBER() OVER (ORDER BY salary desc) as 급여순위 FROM employees; 
+  ```
+
+* RANK ()
+
+  * 같은 값을 가지는 항목의 순위는 같게 매겨짐
+  * 같은 값을 가지는 항목 수만큼 중간에 순위가 빠짐
+
+  ```sql
+  SELECT first_name as 이름, salary as 급여, 
+  RANK() OVER (ORDER BY salary desc) as 급여순위 FROM employees; 
+  ```
+
+* DENSE_RANK ()
+
+  * 같은 값을 가지는 항목의 순위는 같게 매겨짐
+  * 중간에 빠지는 순위가 없도록 함
+
+  ```sql
+  SELECT first_name as 이름, salary as 급여, 
+  DENSE_RANK() OVER (ORDER BY salary desc) as 급여순위 FROM employees; 
+  ```
+
+
+
+
+
+#### PARTITION BY
+
+* 특정 항목 내에서 순위 매길 경우
+
+```sql
+SELECT first_name as 이름, salary as 급여, department_id as 부서코드,
+ROW_NUMBER() OVER (PARTITION BY department_id ORDER BY salary desc) as 급여순위 FROM employees; 
+
+#부서별 salary 순위 조회 --> 전체가 아닌 한 부서 내에서 순위 매김
+```
+
+
+
+
+
+#### NVL ()
+
+* 값이 null일 경우 다른 값을 출력하고 싶을 때 사용
+* 사용 예시
+  * NVL (COLUMN, null 대체값)
+  * NVL (COLUMN 정수, null 대체값 정수)
+  * NVL (COLUMN 문자열, null 대체값 정수 + 문자열)
+
+```sql
+#commission_pct가 null일 경우 0을 출력하도록 함
+SELECT first_name, NVL(commission_pct, 0) FROM employees;
+
+#commission_pct가 null일 경우 '보너스 없음'을 출력하도록 함
+#commission_pct가 숫자 타입이므로 문자로 변환 후에 NVL 적용
+SELECT first_name, NVL(TO_CHAR(commission_pct), '보너스 없음') FROM employees;
+```
