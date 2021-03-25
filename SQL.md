@@ -40,3 +40,9 @@ SELECT department_id, sum(salary) FROM employees
 WHERE department_id is not null GROUP BY department_id;
 ```
 
+
+
+
+
+#### HAVING
+
