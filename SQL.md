@@ -122,7 +122,7 @@ GROUP BY CUBE(department_id, job_id);
 
 #### 데이터 형식
 
-| 문자<br />(VARCHAR2 사용)     | CHAR, VARCHAR2 -> 영문: 1byte<br />                                       한글: 3byte<br />CHAR(50) --> 'ABC'<br />--> [ABC + 47byte 고정]<br />VARCHAR2(50) --> 'ABC'<br />--> [ABC]<br />NCHAR, NVARCHAR2 -> 유니코드 2byte 한글<br />'데이터' --> 대소문자 구분 |
+| 문자 (VARCHAR2 사용)          | CHAR, VARCHAR2 -> 영문: 1byte, 한글: 3byte<br />CHAR(50) --> 'ABC' --> [ABC + 47byte 고정]<br />VARCHAR2(50) --> 'ABC' --> [ABC]<br />NCHAR, NVARCHAR2 -> 유니코드 2byte 한글<br />'데이터' --> 대소문자 구분 |
 | ----------------------------- | ------------------------------------------------------------ |
 | 정수<br />(NUMBER(8) 사용)    | BINARY_INT, INT, NUMBER(8), NUMBER(8, 0)                     |
 | 실수<br />(NUMBER(8, 2) 사용) | BINARY_FLOAT, FLOAT, NUMBER(8, 2) --> 정수 6, 소수 2         |
