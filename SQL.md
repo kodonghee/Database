@@ -18,4 +18,25 @@
 | stdev    | 표준편차 - 숫자                                              |
 | variance | 분산 - 숫자                                                  |
 
-* 그룹 함수 조회하는 select 절에 다른 column 기술 불가능
+* 그룹 함수 조회하는 select 절에 다른 column 기술 불가능 
+  * 단, GROUP BY 절의 column 제외
+
+
+
+
+
+#### GROUP BY
+
+* 어떤 항목별로 나눠서 조회
+
+```sql
+SELECT department_id, sum(salary) FROM employees GROUP BY department_id;
+```
+
+* WHERE 절은 GROUP BY 절보다 먼저 작성
+
+```sql
+SELECT department_id, sum(salary) FROM employees 
+WHERE department_id is not null GROUP BY department_id;
+```
+
