@@ -22,5 +22,9 @@
      * ORDER BY
      * GROUP BY
      * HAVING
-
    * Subquery
+
+3. SQL 고급
+   * Oracle 내장 함수
+     * 데이터 형 변환 함수
+       * CAST(), TO_CHAR(), TO_NUMBER(), TO_DATE()
