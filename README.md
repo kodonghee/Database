@@ -9,4 +9,18 @@
   
 
 1. OracleDatabase
-   * SELECT 문법
+   
+   * database 개념
+   * database를 다룰 수 있는 프로그램 종류
+   
+2. SQL 기본
+
+   * SELECT문
+     * SELECT
+     * FROM
+     * WHERE
+     * ORDER BY
+     * GROUP BY
+     * HAVING
+
+   * Subquery
