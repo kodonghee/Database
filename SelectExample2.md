@@ -15,7 +15,7 @@ WHERE LOWER(country_name) = 'united states of america';
 
 ```sql
 SELECT first_name || '의 입사일은 ' || TO_CHAR(hire_date, 'YY/MM/fmDD')
-|| ' 이고, 급여는 ' || TO_CHAR(salary, '999,999L') || ' 입니다.' as 직원정보 
+|| ' 이고, 급여는 ' || LTRIM(TO_CHAR(salary, '999,999L')) || ' 입니다.' as 직원정보 
 FROM employees;
 ```
 
