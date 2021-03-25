@@ -15,7 +15,8 @@ WHERE LOWER(country_name) = 'united states of america';
 
 ```sql
 SELECT first_name || '의 입사일은 ' || TO_CHAR(hire_date, 'YY/MM/fmDD')
-|| ' 이고, 급여는 ' || TO_CHAR(salary, '99,999L') || ' 입니다.' FROM employees;
+|| ' 이고, 급여는 ' || TO_CHAR(salary, '999,999L') || ' 입니다.' as 직원정보 
+FROM employees;
 ```
 
 4. 이름이 5글자 이하인 직원들의 이름, 급여, 입사일을 조회하시오.

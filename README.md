@@ -29,8 +29,14 @@
    * Oracle 내장 함수
      * 데이터 형 변환 함수
        * CAST(), TO_CHAR(), TO_NUMBER(), TO_DATE()
-
-     * 문자열 함수
+* 문자열 함수
        * LENGTH(), LENGTHB(), CONCAT(), INSTR(), SUBINSTR()
        * LOWER(), UPPER(), INITCAP()
        * REPLACE(), TRANSLATE()
+     * 숫자 데이터 함수
+       * MOD(), ROUND(), TRUNC()
+     * 날짜 데이터 함수
+       * SYSDATE
+       * SYSTIMESTAMP
+       * ADD_MONTHS(), MONTHS_BETWEEN()
+   * [예제 모음](https://github.com/kodonghee/Database/blob/master/SelectExample2.md)
