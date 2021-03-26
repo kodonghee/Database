@@ -201,7 +201,7 @@ SELECT rownum, hire_date from employees;
 SELECT first_name, salary FROM Employees WHERE salary >= 10000;
 ```
 
-* in ()
+* in () | not in ()
 
 ```sql
 SELECT employee_id, first_name FROM Employees 

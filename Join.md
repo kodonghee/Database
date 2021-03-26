@@ -1,6 +1,6 @@
 ## JOIN
 
-* 두 개 이상의 table을 합칠 때 사용
+* 두 개 이상의 table의 열을 합칠 때 사용
 
 ```sql
 #employees와 departments 두 개의 table 정보 모두 출력하고 싶을 때
@@ -102,3 +102,94 @@ AND UPPER(city) = 'LONDON';
   * null 데이터가 많을 때 (L자형 table)
 * 데이터를 분리해서 table을 여러 개 만드는 것이 좋음
 * 필요 시에 JOIN을 사용하면 됨
+
+
+
+
+
+## 집합 연산자
+
+
+
+
+
+#### UNION | UNION ALL
+
+* 합집합과 같은 개념
+
+* 두 table의 행을 합칠 때 사용 
+
+  * JOIN과 달리 data의 개수가 늘어남
+  * 같은 구조를 가지고 있는 두 개의 **서로 다른** table이 있을 때 유용
+
+  ```sql
+  #각각 조회할 경우
+  SELECT employee_id, first_name FROM employees; #행 100개
+  SELECT id, name FROM 회원; #행 200개
+  
+  #UNION 사용해서 조회할 경우
+  SELECT employee_id, first_name FROM employees
+  UNION
+  SELECT id, name FROM 회원; #행 300개
+  
+  #UNION: 두 가지 조건을 모두 만족하거나 하나의 조건만 만족하는 데이터 조회
+  #부서가 50이고 급여가 5000 이하인 사원이라면 중복자 제외
+  SELECT first_name, department_id, salary
+  FROM employees
+  WHERE department_id = 50
+  UNION
+  SELECT first_name, department_id, salary
+  FROM employees
+  WHERE salary <= 5000;
+  
+  #UNION ALL: 두 가지 조건을 모두 만족하거나 하나의 조건만 만족하는 데이터 조회
+  #부서가 50이고 급여가 5000 이하인 사원이라면 2번 조회
+  SELECT first_name, department_id, salary
+  FROM employees
+  WHERE department_id = 50
+  UNION ALL 
+  SELECT first_name, department_id, salary
+  FROM employees
+  WHERE salary <= 5000;
+  ```
+
+
+
+
+
+#### MINUS
+
+* 차집합과 같은 개념
+  * 첫 번째 조건을 만족하는 결과에서 두 번째 조건을 만족하는 결과를 제외
+
+```sql
+#부서가 50번인 사람 중에서 salary가 5000 초과인 사원 조회
+SELECT first_name, department_id, salary
+FROM employees
+WHERE department_id = 50
+MINUS 
+SELECT first_name, department_id, salary
+FROM employees
+WHERE salary <= 5000;
+```
+
+
+
+
+
+#### INTERSECT
+
+* 교집합과 같은 개념
+  * 두 조건을 모두 만족하는 데이터만 조회 (중복자 제외)
+
+```sql
+#부서가 50번이고 salary가 5000 이하인 사원 조회
+SELECT first_name, department_id, salary
+FROM employees
+WHERE department_id = 50
+INTERSECT
+SELECT first_name, department_id, salary
+FROM employees
+WHERE salary <= 5000;
+```
+
