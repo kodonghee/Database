@@ -134,7 +134,7 @@ FROM DUAL;
 
 #### 함수 정리
 
-| 타입 변환 함수   | CAST<br />TO_DATE, TO_CHAR, TO_NUMBER                        |
+| 타입 변환 함수   | CAST(123 as date\|number\|varchar2)<br />TO_DATE \| TO_CHAR \| TO_NUMBER<br />TO_CHAR(sysdate, 'yyyy/mm/dd') |
 | ---------------- | ------------------------------------------------------------ |
 | 그룹 합수        | SUM, AVG, MIN, MAX, COUNT, STDEV, VARIANCE                   |
 | 문자 데이터 함수 | UPPER, LOWER, INITCAP<br />CONCAT, LENGTH, LENGTHB, INSTR, SUBSTR<br />REPLACE, TRANSLATE<br />LTRIM, RTRIM |
@@ -142,7 +142,6 @@ FROM DUAL;
 | 날짜 데이터 함수 | SYSDATE<br />SYSTIMESTAMP - 1/1000초<br />ADD_MONTHS()<br />MONTHS_BETWEEN() |
 | 순위 함수        | ROWNUM<br />ROW_NUMBER()<br />RANK()<br />DENSE_RANK()<br /><br />ROW_NUMBER()<br />RANK()<br />DENSE_RANK()<br />순위함수 ()<br />OVER (PARTITION BY 소그룹 COLUMN<br />ORDER BY COLUMN ACS/DESC) |
 | NULL 처리함수    | NVL(salary, 0)                                               |
-|                  |                                                              |
 
 
 
